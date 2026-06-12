@@ -1,6 +1,6 @@
 services:
   - type: web
-    name: karthik-portfolio
+    name: k-chandhru-portfolio
     env: node
     plan: free
     buildCommand: npm install && npm run build
