@@ -160,7 +160,27 @@ body::after {
   display: flex;
   flex-direction: column;
   position: relative;
+}
+
+/* Background Color Layer (placed behind the image to prevent blocking it) */
+.app-container::after {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: -4; /* behind background image */
+  pointer-events: none;
   transition: background-color 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.app-container.light-off::after {
+  background-color: #03050b;
+}
+
+.app-container.light-on::after {
+  background-color: #060b1e;
 }
 
 /* Base static background image on container pseudo-element */
@@ -175,7 +195,7 @@ body::after {
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
-  z-index: -3; /* behind animated shapes */
+  z-index: -3; /* in front of background color, but behind animated shapes */
   pointer-events: none;
   transition: opacity 1.0s cubic-bezier(0.16, 1, 0.3, 1);
 }
@@ -188,14 +208,6 @@ body::after {
 /* LIGHTS ON: Background is fully revealed (32% opacity for clear text legibility) */
 .app-container.light-on::before {
   opacity: 0.32;
-}
-
-.app-container.light-off {
-  background-color: #03050b;
-}
-
-.app-container.light-on {
-  background-color: #060b1e;
 }
 
 /* Dim floats and particles when lights are off */
