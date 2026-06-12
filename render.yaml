@@ -1,0 +1,14 @@
+services:
+  - type: web
+    name: karthik-portfolio
+    env: node
+    plan: free
+    buildCommand: npm install && npm run build
+    startCommand: node server.js
+    envVars:
+      - key: JWT_SECRET
+        generateValue: true
+      - key: ADMIN_EMAIL
+        value: karthikchandhru370@gmail.com
+      - key: ADMIN_PASSWORD
+        value: Chandhru@19

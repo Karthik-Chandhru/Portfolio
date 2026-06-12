@@ -1,0 +1,309 @@
+{
+  "skills": [
+    {
+      "_id": "ob5gibc",
+      "name": "Java",
+      "category": "Programming Languages"
+    },
+    {
+      "_id": "5pcm4pp",
+      "name": "JavaScript",
+      "category": "Programming Languages"
+    },
+    {
+      "_id": "iq0m141",
+      "name": "C#",
+      "category": "Programming Languages"
+    },
+    {
+      "_id": "e3v0ww8",
+      "name": "Python",
+      "category": "Programming Languages"
+    },
+    {
+      "_id": "pwcdpbk",
+      "name": "TypeScript",
+      "category": "Programming Languages"
+    },
+    {
+      "_id": "g3z5pdm",
+      "name": "SQL",
+      "category": "Programming Languages"
+    },
+    {
+      "_id": "jdb1xbx",
+      "name": "React.js",
+      "category": "Frontend Technologies"
+    },
+    {
+      "_id": "mkztndz",
+      "name": "HTML5",
+      "category": "Frontend Technologies"
+    },
+    {
+      "_id": "tv7mv68",
+      "name": "CSS3",
+      "category": "Frontend Technologies"
+    },
+    {
+      "_id": "0pzrvul",
+      "name": "Tailwind CSS",
+      "category": "Frontend Technologies"
+    },
+    {
+      "_id": "gfmpxlo",
+      "name": "Responsive Web Design",
+      "category": "Frontend Technologies"
+    },
+    {
+      "_id": "mp2dhoz",
+      "name": "Node.js",
+      "category": "Backend Technologies"
+    },
+    {
+      "_id": "xagya7e",
+      "name": "Express.js",
+      "category": "Backend Technologies"
+    },
+    {
+      "_id": "m4z2bm3",
+      "name": "ASP.NET MVC",
+      "category": "Backend Technologies"
+    },
+    {
+      "_id": "tt6uft8",
+      "name": "ASP.NET Core",
+      "category": "Backend Technologies"
+    },
+    {
+      "_id": "a6kefcl",
+      "name": "REST APIs",
+      "category": "Backend Technologies"
+    },
+    {
+      "_id": "4kllcgw",
+      "name": "JWT Authentication",
+      "category": "Backend Technologies"
+    },
+    {
+      "_id": "efjkucr",
+      "name": "MySQL",
+      "category": "Databases"
+    },
+    {
+      "_id": "qjcyh0d",
+      "name": "PostgreSQL",
+      "category": "Databases"
+    },
+    {
+      "_id": "z8b8r4m",
+      "name": "SQL Server",
+      "category": "Databases"
+    },
+    {
+      "_id": "j0yldlw",
+      "name": "MongoDB",
+      "category": "Databases"
+    },
+    {
+      "_id": "9lnxigr",
+      "name": "LLM APIs",
+      "category": "AI & Machine Learning"
+    },
+    {
+      "_id": "txp8q3q",
+      "name": "RAG (Retrieval-Augmented Generation)",
+      "category": "AI & Machine Learning"
+    },
+    {
+      "_id": "51orpvd",
+      "name": "Prompt Engineering",
+      "category": "AI & Machine Learning"
+    },
+    {
+      "_id": "beliifi",
+      "name": "Embeddings",
+      "category": "AI & Machine Learning"
+    },
+    {
+      "_id": "3rsgkj3",
+      "name": "Semantic Search",
+      "category": "AI & Machine Learning"
+    },
+    {
+      "_id": "yciplsy",
+      "name": "Git",
+      "category": "Tools & Platforms"
+    },
+    {
+      "_id": "z3c7oda",
+      "name": "GitHub",
+      "category": "Tools & Platforms"
+    },
+    {
+      "_id": "qo3lxyy",
+      "name": "Docker",
+      "category": "Tools & Platforms"
+    },
+    {
+      "_id": "gox4tl7",
+      "name": "Visual Studio",
+      "category": "Tools & Platforms"
+    },
+    {
+      "_id": "nl6a5az",
+      "name": "VS Code",
+      "category": "Tools & Platforms"
+    },
+    {
+      "_id": "pg3aygc",
+      "name": "Postman",
+      "category": "Tools & Platforms"
+    },
+    {
+      "_id": "jgc9fdv",
+      "name": "Swagger",
+      "category": "Tools & Platforms"
+    },
+    {
+      "_id": "3xm389t",
+      "name": "Vercel",
+      "category": "Tools & Platforms"
+    },
+    {
+      "_id": "vx1jh89",
+      "name": "Render",
+      "category": "Tools & Platforms"
+    },
+    {
+      "_id": "bo35zlj",
+      "name": "pgAdmin",
+      "category": "Tools & Platforms"
+    },
+    {
+      "_id": "jwnwte7",
+      "name": "Data Structures & Algorithms",
+      "category": "Core Concepts"
+    },
+    {
+      "_id": "ubibany",
+      "name": "MVC Architecture",
+      "category": "Core Concepts"
+    },
+    {
+      "_id": "zmxf81u",
+      "name": "CRUD Operations",
+      "category": "Core Concepts"
+    },
+    {
+      "_id": "li3hux3",
+      "name": "Role-Based Access Control (RBAC)",
+      "category": "Core Concepts"
+    },
+    {
+      "_id": "g93e2dk",
+      "name": "Authentication & Authorization",
+      "category": "Core Concepts"
+    },
+    {
+      "_id": "mx07e3o",
+      "name": "API Integration",
+      "category": "Core Concepts"
+    },
+    {
+      "_id": "tjo8syj",
+      "name": "Agile Development",
+      "category": "Core Concepts"
+    },
+    {
+      "_id": "2423vkf",
+      "name": "Unit Testing",
+      "category": "Core Concepts"
+    }
+  ],
+  "experiences": [
+    {
+      "_id": "jrvr1i5",
+      "title": "Full Stack Developer",
+      "company": "Mahat.AI | Coimbatore",
+      "location": "Coimbatore",
+      "duration": "June 2025 – June 2026",
+      "points": [
+        "Developed and deployed multiple web application modules using ASP.NET MVC.",
+        "Worked on frontend development using Razor and jQuery.",
+        "Built backend services using C#.",
+        "Designed CRUD operations and REST APIs integrated with PostgreSQL and SQL Server.",
+        "Optimized database queries to improve performance.",
+        "Collaborated with senior developers to resolve production issues.",
+        "Participated in Git-based development workflows and code reviews."
+      ]
+    },
+    {
+      "_id": "bnp28u5",
+      "title": "Full Stack Development Intern",
+      "company": "National Small Industries Corporation (NSIC)",
+      "location": "Chennai",
+      "duration": "August 2024 – September 2024",
+      "points": [
+        "Developed a responsive e-commerce webpage.",
+        "Worked with HTML, CSS, JavaScript, and backend integration concepts.",
+        "Gained experience in responsive design, debugging, and software development best practices."
+      ]
+    }
+  ],
+  "certifications": [
+    {
+      "_id": "wsaqbgq",
+      "title": "Data Structures and Algorithms (DSA)",
+      "issuer": "Infosys Springboard",
+      "driveLink": "https://drive.google.com/drive/folders/your-cert-dsa"
+    },
+    {
+      "_id": "ci4cj57",
+      "title": "Full Stack Development Internship Certification",
+      "issuer": "NSIC, Chennai",
+      "driveLink": "https://drive.google.com/drive/folders/your-cert-nsic"
+    }
+  ],
+  "projects": [
+    {
+      "_id": "d08f7so",
+      "title": "Edu-Connect Pro – Smart Campus Management Platform",
+      "techStack": "React.js, Node.js, Express.js, MySQL, Tailwind CSS",
+      "overview": "A centralized smart campus platform designed to automate student management, attendance tracking, and faculty communication.",
+      "features": [
+        "Student Management System",
+        "Attendance Tracking",
+        "Faculty Communication Portal",
+        "SMS Integration",
+        "WhatsApp Notification System",
+        "JWT Authentication",
+        "Role-Based Access Control (RBAC)",
+        "Responsive Dashboards"
+      ],
+      "impact": [
+        "Served over 500+ users.",
+        "Automated campus operations.",
+        "Awarded ₹10,000 cash prize.",
+        "Successfully adopted for college operations."
+      ],
+      "projectLink": "https://github.com/Karthik-Chandhru/Edu-Connect-Pro"
+    },
+    {
+      "_id": "7m6g7qt",
+      "title": "AI-Based Healthcare Application",
+      "techStack": "React, Node, Express, MongoDB, LLM APIs",
+      "overview": "An AI-powered healthcare application developed during a VIT hackathon, building a complete MVP within 24 hours.",
+      "features": [
+        "Built a complete full-stack healthcare solution.",
+        "Developed frontend, backend, and database within 24 hours.",
+        "Shortlisted among top finalist teams from over 100 participants.",
+        "Demonstrated rapid problem-solving and teamwork skills."
+      ],
+      "impact": [
+        "Top Finalist at VIT Hackathon (out of 100+ teams)."
+      ],
+      "projectLink": "https://github.com/Karthik-Chandhru/AI-Healthcare"
+    }
+  ]
+}
