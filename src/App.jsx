@@ -310,7 +310,7 @@ export default function App() {
             <a href="https://github.com/Karthik-Chandhru" target="_blank" rel="noreferrer" className="social-icon" aria-label="GitHub">
               <GithubIcon size={20} />
             </a>
-            <a href="https://linkedin.com/in/karthik-chandhru-m-8807393370" target="_blank" rel="noreferrer" className="social-icon" aria-label="LinkedIn">
+            <a href="https://www.linkedin.com/in/karthik-chandhru-m-1077b0347/" target="_blank" rel="noreferrer" className="social-icon" aria-label="LinkedIn">
               <LinkedinIcon size={20} />
             </a>
             <a href="mailto:karthikchandhru370@gmail.com" className="social-icon" aria-label="Email">
