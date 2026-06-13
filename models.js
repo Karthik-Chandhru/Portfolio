@@ -1,3 +1,4 @@
+/* global process */
 import mongoose from 'mongoose';
 import fs from 'fs';
 import path from 'path';
@@ -45,6 +46,12 @@ const ProjectSchema = new mongoose.Schema({
   liveLink: { type: String, default: '' }
 });
 
+const ProfileSchema = new mongoose.Schema({
+  name: { type: String, required: true },
+  taglines: { type: [String], default: [] },
+  description: { type: String, required: true }
+});
+
 // --- MOCK LOCAL JSON DB IMPLEMENTATION ---
 function readDB() {
   try {
@@ -53,7 +60,7 @@ function readDB() {
     }
     const data = fs.readFileSync(DB_FILE, 'utf8');
     return JSON.parse(data);
-  } catch (e) {
+  } catch {
     return { skills: [], experiences: [], certifications: [], projects: [] };
   }
 }
@@ -89,11 +96,11 @@ class MockModel {
 
   static getModel(collectionName) {
     return {
-      find: async (query = {}) => {
+      find: async () => {
         const db = readDB();
         return db[collectionName] || [];
       },
-      countDocuments: async (query = {}) => {
+      countDocuments: async () => {
         const db = readDB();
         return (db[collectionName] || []).length;
       },
@@ -118,7 +125,7 @@ class MockModel {
         }
         return null;
       },
-      findByIdAndUpdate: async (id, updateData, options = {}) => {
+      findByIdAndUpdate: async (id, updateData) => {
         const db = readDB();
         const list = db[collectionName] || [];
         const index = list.findIndex(item => item._id === id);
@@ -138,18 +145,21 @@ const MongoSkill = mongoose.model('Skill', SkillSchema);
 const MongoExperience = mongoose.model('Experience', ExperienceSchema);
 const MongoCertification = mongoose.model('Certification', CertificationSchema);
 const MongoProject = mongoose.model('Project', ProjectSchema);
+const MongoProfile = mongoose.model('Profile', ProfileSchema);
 
 // Define wrappers
 export let Skill;
 export let Experience;
 export let Certification;
 export let Project;
+export let Profile;
 
 if (useMongoDB) {
   Skill = MongoSkill;
   Experience = MongoExperience;
   Certification = MongoCertification;
   Project = MongoProject;
+  Profile = MongoProfile;
 } else {
   // Use mock JSON models
   class JSONSkill extends MockModel {
@@ -172,8 +182,14 @@ if (useMongoDB) {
   }
   Object.assign(JSONProject, MockModel.getModel('projects'));
 
+  class JSONProfile extends MockModel {
+    constructor(data) { super('profile', data); }
+  }
+  Object.assign(JSONProfile, MockModel.getModel('profile'));
+
   Skill = JSONSkill;
   Experience = JSONExperience;
   Certification = JSONCertification;
   Project = JSONProject;
+  Profile = JSONProfile;
 }

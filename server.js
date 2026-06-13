@@ -1,3 +1,4 @@
+/* global process */
 import express from 'express';
 import mongoose from 'mongoose';
 import cors from 'cors';
@@ -5,7 +6,7 @@ import dotenv from 'dotenv';
 import jwt from 'jsonwebtoken';
 import path from 'path';
 import { fileURLToPath } from 'url';
-import { Skill, Experience, Certification, Project, useMongoDB } from './models.js';
+import { Skill, Experience, Certification, Project, Profile, useMongoDB } from './models.js';
 
 dotenv.config();
 
@@ -45,7 +46,7 @@ const authenticateAdmin = (req, res, next) => {
     } else {
       res.status(403).json({ message: 'Forbidden' });
     }
-  } catch (error) {
+  } catch {
     res.status(401).json({ message: 'Invalid token' });
   }
 };
@@ -236,10 +237,26 @@ const performSeeding = async () => {
     }
   ];
 
+  // Seed Profile
+  const initialProfile = [
+    {
+      name: 'Karthik Chandhru M',
+      taglines: [
+        'MERN Stack Developer',
+        '.NET Developer',
+        'AIML Engineer',
+        'Full Stack Developer',
+        'Software Developer'
+      ],
+      description: 'I build scalable, secure MERN stack and .NET applications while integrating cognitive AI/ML workflows. Experienced in C# (ASP.NET Core/MVC), React.js, Node.js, and relational/NoSQL databases. Expanding research into Large Language Models, Prompt Engineering, and Semantic Search.'
+    }
+  ];
+
   await Skill.insertMany(initialSkills);
   await Experience.insertMany(initialExperiences);
   await Certification.insertMany(initialCertifications);
   await Project.insertMany(initialProjects);
+  await Profile.insertMany(initialProfile);
 };
 
 // Seed Initial Data Route
@@ -250,11 +267,12 @@ app.post('/api/portfolio/seed', async (req, res) => {
     const expCount = await Experience.countDocuments({});
     const certCount = await Certification.countDocuments({});
     const projCount = await Project.countDocuments({});
-
-    if (skillCount > 0 || expCount > 0 || certCount > 0 || projCount > 0) {
+    const profileCount = await Profile.countDocuments({});
+ 
+    if (skillCount > 0 || expCount > 0 || certCount > 0 || projCount > 0 || profileCount > 0) {
       return res.status(400).json({ message: 'Database is already seeded' });
     }
-
+ 
     await performSeeding();
     res.json({ message: 'Database seeded successfully' });
   } catch (error) {
@@ -391,7 +409,51 @@ app.delete('/api/portfolio/certifications/:id', authenticateAdmin, async (req, r
   }
 });
 
-// Serve frontend build static files in production
+// PROFILE CRUD
+app.get('/api/portfolio/profile', async (req, res) => {
+  try {
+    const profiles = await Profile.find({});
+    if (profiles.length > 0) {
+      res.json(profiles[0]);
+    } else {
+      res.json({
+        name: 'Karthik Chandhru M',
+        taglines: [
+          'MERN Stack Developer',
+          '.NET Developer',
+          'AIML Engineer',
+          'Full Stack Developer',
+          'Software Developer'
+        ],
+        description: 'I build scalable, secure MERN stack and .NET applications while integrating cognitive AI/ML workflows. Experienced in C# (ASP.NET Core/MVC), React.js, Node.js, and relational/NoSQL databases. Expanding research into Large Language Models, Prompt Engineering, and Semantic Search.'
+      });
+    }
+  } catch (error) {
+    console.error('Error fetching profile:', error);
+    res.status(500).json({ message: 'Internal server error' });
+  }
+});
+
+app.put('/api/portfolio/profile', authenticateAdmin, async (req, res) => {
+  const { name, taglines, description } = req.body;
+  try {
+    const profiles = await Profile.find({});
+    if (profiles.length > 0) {
+      const updated = await Profile.findByIdAndUpdate(
+        profiles[0]._id,
+        { name, taglines, description },
+        { new: true }
+      );
+      res.json(updated);
+    } else {
+      const newProf = new Profile({ name, taglines, description });
+      await newProf.save();
+      res.status(201).json(newProf);
+    }
+  } catch (error) {
+    res.status(400).json({ message: 'Error updating profile details', error });
+  }
+});
 app.use(express.static(path.join(__dirname, 'dist')));
 
 app.get('*all', (req, res) => {

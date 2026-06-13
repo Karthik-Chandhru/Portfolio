@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 
 export default function AdminLogin({ isOpen, onClose, onLoginSuccess }) {
   const [email, setEmail] = useState('');

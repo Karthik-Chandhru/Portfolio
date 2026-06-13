@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { 
   Mail, 
   Phone, 
@@ -6,7 +6,6 @@ import {
   Plus, 
   Trash2, 
   Edit3, 
-  Briefcase, 
   Award, 
   GraduationCap, 
   Shield, 
@@ -34,7 +33,7 @@ const LinkedinIcon = ({ size = 20 }) => (
   </svg>
 );
 
-const LightSwitch = ({ isLightOn, onToggle }) => {
+const LightSwitch = ({ onToggle }) => {
   const [isPulled, setIsPulled] = useState(false);
 
   const handlePull = () => {
@@ -64,10 +63,15 @@ export default function App() {
   const [experiences, setExperiences] = useState([]);
   const [certifications, setCertifications] = useState([]);
   const [projects, setProjects] = useState([]);
+  const [profile, setProfile] = useState({
+    name: 'Karthik Chandhru M',
+    taglines: ['MERN Stack Developer', '.NET Developer', 'AIML Engineer', 'Full Stack Developer', 'Software Developer'],
+    description: 'I build scalable, secure MERN stack and .NET applications while integrating cognitive AI/ML workflows. Experienced in C# (ASP.NET Core/MVC), React.js, Node.js, and relational/NoSQL databases. Expanding research into Large Language Models, Prompt Engineering, and Semantic Search.'
+  });
   
   // Authentication & Admin Mode
-  const [isAdmin, setIsAdmin] = useState(false);
-  const [token, setToken] = useState(null);
+  const [token, setToken] = useState(() => localStorage.getItem('portfolio_admin_token'));
+  const [isAdmin, setIsAdmin] = useState(() => !!localStorage.getItem('portfolio_admin_token'));
   
   // Modals Controller
   const [isLoginOpen, setIsLoginOpen] = useState(false);
@@ -80,19 +84,7 @@ export default function App() {
   const [contactSuccess, setContactSuccess] = useState(false);
   const [isLightOn, setIsLightOn] = useState(false);
 
-  // Check login token on mount
-  useEffect(() => {
-    const storedToken = localStorage.getItem('portfolio_admin_token');
-    if (storedToken) {
-      setToken(storedToken);
-      setIsAdmin(true);
-    }
-    fetchPortfolio();
-  }, []);
-
   const fetchPortfolio = async () => {
-    setLoading(true);
-    setError('');
     try {
       const response = await fetch('/api/portfolio');
       if (response.ok) {
@@ -101,6 +93,13 @@ export default function App() {
         setExperiences(data.experiences || []);
         setCertifications(data.certifications || []);
         setProjects(data.projects || []);
+        const profileRes = await fetch('/api/portfolio/profile');
+        if (profileRes.ok) {
+          const profileData = await profileRes.json();
+          if (profileData) {
+            setProfile(profileData);
+          }
+        }
       } else {
         setError('Failed to fetch portfolio data from server.');
       }
@@ -112,6 +111,12 @@ export default function App() {
     }
   };
 
+  // Check login token on mount
+  useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect
+    fetchPortfolio();
+  }, []);
+
   const handleLogout = () => {
     localStorage.removeItem('portfolio_admin_token');
     setToken(null);
@@ -121,6 +126,7 @@ export default function App() {
   const handleLoginSuccess = (newToken) => {
     setToken(newToken);
     setIsAdmin(true);
+    setLoading(true);
     fetchPortfolio();
   };
 
@@ -160,6 +166,7 @@ export default function App() {
       });
 
       if (response.ok) {
+        setLoading(true);
         fetchPortfolio();
       } else {
         const data = await response.json();
@@ -271,6 +278,22 @@ export default function App() {
         </div>
       </nav>
 
+      {error && (
+        <div className="error-banner" style={{
+          backgroundColor: 'rgba(239, 68, 68, 0.15)',
+          border: '1px solid rgba(239, 68, 68, 0.3)',
+          color: '#ef4444',
+          padding: '0.8rem 1.2rem',
+          borderRadius: '8px',
+          margin: '90px auto 20px',
+          maxWidth: '1200px',
+          textAlign: 'center',
+          backdropFilter: 'blur(8px)'
+        }}>
+          {error}
+        </div>
+      )}
+
       {/* Admin Control Center status bar */}
       {isAdmin && (
         <div className="admin-status-banner">
@@ -291,20 +314,21 @@ export default function App() {
       <header id="hero" className="hero-section">
         <div className="hero-text">
           <div className="hero-greeting">Hi, I'm</div>
-          <h1 className="hero-name">Karthik Chandhru M</h1>
+          <h1 className="hero-name">{profile.name}</h1>
           <div className="hero-tagline">
-            <span>MERN Stack Developer</span>
-            <span>.NET Developer</span>
-            <span>AIML Engineer</span>
+            {profile.taglines && profile.taglines.map((t, idx) => (
+              <span key={idx}>{t}</span>
+            ))}
           </div>
-          <p className="hero-desc">
-            I build scalable, secure MERN stack and .NET applications while integrating cognitive AI/ML workflows. 
-            Experienced in C# (ASP.NET Core/MVC), React.js, Node.js, and relational/NoSQL databases. 
-            Expanding research into Large Language Models, Prompt Engineering, and Semantic Search.
-          </p>
-          <div style={{ display: 'flex', gap: '1.2rem', marginBottom: '2.5rem', flexWrap: 'wrap' }}>
+          <p className="hero-desc">{profile.description}</p>
+          <div style={{ display: 'flex', gap: '1.2rem', marginBottom: '2.5rem', flexWrap: 'wrap', alignItems: 'center' }}>
             <a href="#contact" className="btn-primary">Connect with Me</a>
             <a href="#projects" className="btn-secondary">View Work</a>
+            {isAdmin && (
+              <button className="btn-secondary" onClick={() => openEditModal('profile', profile)} style={{ fontSize: '0.85rem', padding: '0.6rem 1.2rem', borderStyle: 'dashed' }}>
+                <Edit3 size={14} style={{ marginRight: '4px' }} /> Edit Hero Text
+              </button>
+            )}
           </div>
           <div className="hero-socials">
             <a href="https://github.com/Karthik-Chandhru" target="_blank" rel="noreferrer" className="social-icon" aria-label="GitHub">
@@ -692,20 +716,25 @@ export default function App() {
       </footer>
 
       {/* Admin Modals */}
-      <AdminLogin 
-        isOpen={isLoginOpen} 
-        onClose={() => setIsLoginOpen(false)} 
-        onLoginSuccess={handleLoginSuccess} 
-      />
+      {isLoginOpen && (
+        <AdminLogin 
+          onClose={() => setIsLoginOpen(false)} 
+          onLoginSuccess={handleLoginSuccess} 
+        />
+      )}
 
-      <AdminEditModal 
-        isOpen={isEditOpen} 
-        type={editType} 
-        item={editItem} 
-        onClose={() => setIsEditOpen(false)} 
-        onSave={fetchPortfolio} 
-        token={token} 
-      />
+      {isEditOpen && (
+        <AdminEditModal 
+          type={editType} 
+          item={editItem} 
+          onClose={() => setIsEditOpen(false)} 
+          onSave={() => {
+            setLoading(true);
+            fetchPortfolio();
+          }} 
+          token={token} 
+        />
+      )}
     </div>
   );
 }

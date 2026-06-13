@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState } from 'react';
 
 const CATEGORIES = [
   'Programming Languages',
@@ -10,65 +10,39 @@ const CATEGORIES = [
   'Core Concepts'
 ];
 
-export default function AdminEditModal({ isOpen, type, item, onClose, onSave, token }) {
+export default function AdminEditModal({ type, item, onClose, onSave, token }) {
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
 
   // Skill state
-  const [skillName, setSkillName] = useState('');
-  const [skillCategory, setSkillCategory] = useState(CATEGORIES[0]);
+  const [skillName, setSkillName] = useState(item ? item.name : '');
+  const [skillCategory, setSkillCategory] = useState(item ? item.category : CATEGORIES[0]);
 
   // Experience state
-  const [expTitle, setExpTitle] = useState('');
-  const [expCompany, setExpCompany] = useState('');
-  const [expLocation, setExpLocation] = useState('');
-  const [expDuration, setExpDuration] = useState('');
-  const [expPoints, setExpPoints] = useState('');
+  const [expTitle, setExpTitle] = useState(item ? item.title : '');
+  const [expCompany, setExpCompany] = useState(item ? item.company : '');
+  const [expLocation, setExpLocation] = useState(item ? item.location : '');
+  const [expDuration, setExpDuration] = useState(item ? item.duration : '');
+  const [expPoints, setExpPoints] = useState(item && item.points ? item.points.join('\n') : '');
 
   // Certification state
-  const [certTitle, setCertTitle] = useState('');
-  const [certIssuer, setCertIssuer] = useState('');
-  const [certDriveLink, setCertDriveLink] = useState('');
+  const [certTitle, setCertTitle] = useState(item ? item.title : '');
+  const [certIssuer, setCertIssuer] = useState(item ? item.issuer : '');
+  const [certDriveLink, setCertDriveLink] = useState(item ? item.driveLink : '');
 
   // Project state
-  const [projTitle, setProjTitle] = useState('');
-  const [projTechStack, setProjTechStack] = useState('');
-  const [projOverview, setProjOverview] = useState('');
-  const [projFeatures, setProjFeatures] = useState('');
-  const [projImpact, setProjImpact] = useState('');
-  const [projLink, setProjLink] = useState('');
-  const [projLiveLink, setProjLiveLink] = useState('');
+  const [projTitle, setProjTitle] = useState(item ? item.title : '');
+  const [projTechStack, setProjTechStack] = useState(item ? item.techStack : '');
+  const [projOverview, setProjOverview] = useState(item ? item.overview : '');
+  const [projFeatures, setProjFeatures] = useState(item && item.features ? item.features.join('\n') : '');
+  const [projImpact, setProjImpact] = useState(item && item.impact ? item.impact.join('\n') : '');
+  const [projLink, setProjLink] = useState(item ? item.projectLink : '');
+  const [projLiveLink, setProjLiveLink] = useState(item ? (item.liveLink || '') : '');
 
-  // Reset/populate form fields when item changes
-  useEffect(() => {
-    setError('');
-    if (isOpen) {
-      if (type === 'skill') {
-        setSkillName(item ? item.name : '');
-        setSkillCategory(item ? item.category : CATEGORIES[0]);
-      } else if (type === 'experience') {
-        setExpTitle(item ? item.title : '');
-        setExpCompany(item ? item.company : '');
-        setExpLocation(item ? item.location : '');
-        setExpDuration(item ? item.duration : '');
-        setExpPoints(item ? item.points.join('\n') : '');
-      } else if (type === 'certification') {
-        setCertTitle(item ? item.title : '');
-        setCertIssuer(item ? item.issuer : '');
-        setCertDriveLink(item ? item.driveLink : '');
-      } else if (type === 'project') {
-        setProjTitle(item ? item.title : '');
-        setProjTechStack(item ? item.techStack : '');
-        setProjOverview(item ? item.overview : '');
-        setProjFeatures(item ? item.features.join('\n') : '');
-        setProjImpact(item ? (item.impact ? item.impact.join('\n') : '') : '');
-        setProjLink(item ? item.projectLink : '');
-        setProjLiveLink(item ? (item.liveLink || '') : '');
-      }
-    }
-  }, [isOpen, type, item]);
-
-  if (!isOpen) return null;
+  // Profile state
+  const [profName, setProfName] = useState(item ? item.name : '');
+  const [profTaglines, setProfTaglines] = useState(item && item.taglines ? item.taglines.join(', ') : '');
+  const [profDescription, setProfDescription] = useState(item ? item.description : '');
 
   const getApiEndpoint = () => {
     let path = '';
@@ -76,8 +50,10 @@ export default function AdminEditModal({ isOpen, type, item, onClose, onSave, to
     else if (type === 'experience') path = 'experience';
     else if (type === 'certification') path = 'certifications';
     else if (type === 'project') path = 'projects';
+    else if (type === 'profile') path = 'profile';
 
     const base = `/api/portfolio/${path}`;
+    if (type === 'profile') return base;
     return item ? `${base}/${item._id}` : base;
   };
 
@@ -120,6 +96,17 @@ export default function AdminEditModal({ isOpen, type, item, onClose, onSave, to
         liveLink: projLiveLink
       };
     }
+    if (type === 'profile') {
+      const taglinesArray = profTaglines
+        .split(',')
+        .map((t) => t.trim())
+        .filter((t) => t.length > 0);
+      return {
+        name: profName,
+        taglines: taglinesArray,
+        description: profDescription
+      };
+    }
   };
 
   const handleSubmit = async (e) => {
@@ -127,7 +114,7 @@ export default function AdminEditModal({ isOpen, type, item, onClose, onSave, to
     setError('');
     setLoading(true);
 
-    const method = item ? 'PUT' : 'POST';
+    const method = type === 'profile' ? 'PUT' : (item ? 'PUT' : 'POST');
     const url = getApiEndpoint();
     const body = getRequestBody();
 
@@ -369,6 +356,41 @@ export default function AdminEditModal({ isOpen, type, item, onClose, onSave, to
                     placeholder="https://your-project.onrender.com"
                   />
                 </div>
+              </div>
+            </>
+          )}
+
+          {type === 'profile' && (
+            <>
+              <div className="form-group">
+                <label>Name</label>
+                <input
+                  type="text"
+                  value={profName}
+                  onChange={(e) => setProfName(e.target.value)}
+                  placeholder="e.g. Karthik Chandhru M"
+                  required
+                />
+              </div>
+              <div className="form-group">
+                <label>Taglines (Comma-separated)</label>
+                <input
+                  type="text"
+                  value={profTaglines}
+                  onChange={(e) => setProfTaglines(e.target.value)}
+                  placeholder="MERN Stack Developer, .NET Developer, AIML Engineer"
+                  required
+                />
+              </div>
+              <div className="form-group">
+                <label>Hero Description</label>
+                <textarea
+                  rows="6"
+                  value={profDescription}
+                  onChange={(e) => setProfDescription(e.target.value)}
+                  placeholder="Write your hero description here..."
+                  required
+                />
               </div>
             </>
           )}
