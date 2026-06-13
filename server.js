@@ -215,7 +215,8 @@ const performSeeding = async () => {
         'Awarded ₹10,000 cash prize.',
         'Successfully adopted for college operations.'
       ],
-      projectLink: 'https://github.com/Karthik-Chandhru/Edu-Connect-Pro'
+      projectLink: 'https://github.com/Karthik-Chandhru/Edu-Connect-Pro',
+      liveLink: 'https://edu-connect-pro.onrender.com'
     },
     {
       title: 'AI-Based Healthcare Application',
@@ -230,7 +231,8 @@ const performSeeding = async () => {
       impact: [
         'Top Finalist at VIT Hackathon (out of 100+ teams).'
       ],
-      projectLink: 'https://github.com/Karthik-Chandhru/AI-Healthcare'
+      projectLink: 'https://github.com/Karthik-Chandhru/AI-Healthcare',
+      liveLink: 'https://ai-healthcare.onrender.com'
     }
   ];
 
@@ -286,9 +288,9 @@ app.delete('/api/portfolio/skills/:id', authenticateAdmin, async (req, res) => {
 
 // PROJECTS CRUD
 app.post('/api/portfolio/projects', authenticateAdmin, async (req, res) => {
-  const { title, techStack, overview, features, impact, projectLink } = req.body;
+  const { title, techStack, overview, features, impact, projectLink, liveLink } = req.body;
   try {
-    const newProj = new Project({ title, techStack, overview, features, impact, projectLink });
+    const newProj = new Project({ title, techStack, overview, features, impact, projectLink, liveLink });
     await newProj.save();
     res.status(201).json(newProj);
   } catch (error) {
@@ -297,11 +299,11 @@ app.post('/api/portfolio/projects', authenticateAdmin, async (req, res) => {
 });
 
 app.put('/api/portfolio/projects/:id', authenticateAdmin, async (req, res) => {
-  const { title, techStack, overview, features, impact, projectLink } = req.body;
+  const { title, techStack, overview, features, impact, projectLink, liveLink } = req.body;
   try {
     const updatedProj = await Project.findByIdAndUpdate(
       req.params.id,
-      { title, techStack, overview, features, impact, projectLink },
+      { title, techStack, overview, features, impact, projectLink, liveLink },
       { new: true }
     );
     res.json(updatedProj);

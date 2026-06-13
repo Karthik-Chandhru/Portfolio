@@ -53,6 +53,7 @@ const LightSwitch = ({ isLightOn, onToggle }) => {
       >
         <div className="rope-line"></div>
         <div className="rope-handle"></div>
+        <div className="rope-tag">Pull Me</div>
       </div>
     </div>
   );
@@ -292,13 +293,13 @@ export default function App() {
           <div className="hero-greeting">Hi, I'm</div>
           <h1 className="hero-name">Karthik Chandhru M</h1>
           <div className="hero-tagline">
-            <span>Full Stack Developer</span>
-            <span>Java Developer</span>
-            <span>AI Enthusiast</span>
+            <span>MERN Stack Developer</span>
+            <span>.NET Developer</span>
+            <span>AIML Engineer</span>
           </div>
           <p className="hero-desc">
-            I build scalable, secure web applications and integrate cognitive AI workflows. 
-            Experienced in C# (ASP.NET Core/MVC), React.js, Node.js, and relational databases. 
+            I build scalable, secure MERN stack and .NET applications while integrating cognitive AI/ML workflows. 
+            Experienced in C# (ASP.NET Core/MVC), React.js, Node.js, and relational/NoSQL databases. 
             Expanding research into Large Language Models, Prompt Engineering, and Semantic Search.
           </p>
           <div style={{ display: 'flex', gap: '1.2rem', marginBottom: '2.5rem', flexWrap: 'wrap' }}>
@@ -533,13 +534,18 @@ export default function App() {
                   </div>
                 )}
 
-                {proj.projectLink && (
-                  <div className="project-footer">
+                <div className="project-footer" style={{ display: 'flex', gap: '0.8rem', flexWrap: 'wrap' }}>
+                  {proj.projectLink && (
                     <a href={proj.projectLink} target="_blank" rel="noreferrer" className="project-link-btn">
                       Source Code <ExternalLink size={14} />
                     </a>
-                  </div>
-                )}
+                  )}
+                  {proj.liveLink && (
+                    <a href={proj.liveLink} target="_blank" rel="noreferrer" className="project-link-btn live" style={{ borderColor: 'var(--primary)', color: 'var(--primary)' }}>
+                      Go Live <ExternalLink size={14} />
+                    </a>
+                  )}
+                </div>
               </div>
             ))
           ) : (

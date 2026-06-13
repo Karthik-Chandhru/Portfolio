@@ -41,7 +41,8 @@ const ProjectSchema = new mongoose.Schema({
   overview: { type: String, required: true },
   features: { type: [String], default: [] },
   impact: { type: [String], default: [] },
-  projectLink: { type: String, default: '' }
+  projectLink: { type: String, default: '' },
+  liveLink: { type: String, default: '' }
 });
 
 // --- MOCK LOCAL JSON DB IMPLEMENTATION ---

@@ -282,6 +282,29 @@ body::before, body::after {
   box-shadow: 0 2px 4px rgba(0,0,0,0.4);
 }
 
+.rope-tag {
+  position: absolute;
+  top: 172px;
+  background: var(--primary);
+  color: #040814;
+  font-family: var(--font-heading);
+  font-size: 0.62rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  padding: 1.5px 5px;
+  border-radius: 3px;
+  box-shadow: 0 0 8px var(--primary-glow);
+  pointer-events: none;
+  white-space: nowrap;
+  animation: ropeTagPulse 2s infinite ease-in-out;
+  transform: translate(0, 0);
+}
+
+@keyframes ropeTagPulse {
+  0%, 100% { opacity: 0.85; transform: scale(1); }
+  50% { opacity: 1; transform: scale(1.08); }
+}
+
 .switch-rope.pulled {
   transform: translateY(24px);
 }

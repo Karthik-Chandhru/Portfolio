@@ -37,6 +37,7 @@ export default function AdminEditModal({ isOpen, type, item, onClose, onSave, to
   const [projFeatures, setProjFeatures] = useState('');
   const [projImpact, setProjImpact] = useState('');
   const [projLink, setProjLink] = useState('');
+  const [projLiveLink, setProjLiveLink] = useState('');
 
   // Reset/populate form fields when item changes
   useEffect(() => {
@@ -62,6 +63,7 @@ export default function AdminEditModal({ isOpen, type, item, onClose, onSave, to
         setProjFeatures(item ? item.features.join('\n') : '');
         setProjImpact(item ? (item.impact ? item.impact.join('\n') : '') : '');
         setProjLink(item ? item.projectLink : '');
+        setProjLiveLink(item ? (item.liveLink || '') : '');
       }
     }
   }, [isOpen, type, item]);
@@ -114,7 +116,8 @@ export default function AdminEditModal({ isOpen, type, item, onClose, onSave, to
         overview: projOverview,
         features: featuresArray,
         impact: impactArray,
-        projectLink: projLink
+        projectLink: projLink,
+        liveLink: projLiveLink
       };
     }
   };
@@ -347,14 +350,25 @@ export default function AdminEditModal({ isOpen, type, item, onClose, onSave, to
                 />
               </div>
 
-              <div className="form-group">
-                <label>Project Repository / Live URL</label>
-                <input
-                  type="url"
-                  value={projLink}
-                  onChange={(e) => setProjLink(e.target.value)}
-                  placeholder="https://github.com/..."
-                />
+              <div className="row-group">
+                <div className="form-group">
+                  <label>Project Repository URL (GitHub)</label>
+                  <input
+                    type="url"
+                    value={projLink}
+                    onChange={(e) => setProjLink(e.target.value)}
+                    placeholder="https://github.com/..."
+                  />
+                </div>
+                <div className="form-group">
+                  <label>Live Website URL</label>
+                  <input
+                    type="url"
+                    value={projLiveLink}
+                    onChange={(e) => setProjLiveLink(e.target.value)}
+                    placeholder="https://your-project.onrender.com"
+                  />
+                </div>
               </div>
             </>
           )}
