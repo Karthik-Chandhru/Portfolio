@@ -1,12 +1,10 @@
 import { useState } from 'react';
 
-export default function AdminLogin({ isOpen, onClose, onLoginSuccess }) {
+export default function AdminLogin({ onClose, onLoginSuccess }) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
-
-  if (!isOpen) return null;
 
   const handleSubmit = async (e) => {
     e.preventDefault();
